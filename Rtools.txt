@@ -1,0 +1,72 @@
+                      Rtools Collection 3.5.0.0
+
+This is the Rtools.txt file, which will be installed in the main
+Rtools directory. See also the README.txt file there, which describes
+the origin of some of the tools. The tools installed in the
+Rtools\mingw_32, and Rtools\mingw_64 directories 
+are from the MinGW-w64 distribution.  
+ 
+
+                                MSYS2
+			  
+This version upgrades the old cygwin utilities to msys2. 
+
+                           REMAINING TASKS
+
+This installer doesn't install all of the tools necessary to build R
+or R packages, because of license or size limitations.  The remaining
+tools are all available online (at no charge) as described below.
+
+TO BUILD R PACKAGES, you may optionally want item 1 below
+(LaTeX).
+
+TO BUILD R, you do need item 1, and item 2 (Inno Setup) is optional if you
+would like to build the installer.
+
+As of R 3.2.0, the manuals are optional.  To build them you will need
+item 3 below. 
+
+The Rtools installer will optionally edit your PATH variable as follows:
+
+PATH=c:\Rtools\bin;<others>
+
+(where you will substitute appropriate directories for the ones listed
+above, but please keep the path in the same order as shown. LaTeX and
+R itself should be installed among the "others".)
+
+                           REMAINING ITEMS
+
+1. You may install LaTeX, available from
+
+  http://www.miktex.org
+  
+LaTeX is used to build .pdf forms of documentation.
+  
+2. You need the Inno Setup installer, available from
+
+  http://www.innosetup.com
+  
+to build the R installer.
+
+3. You will need Perl, e.g. from
+
+  http://strawberryperl.com/
+  
+to build the manuals.
+
+                               VERSIONS
+			
+This installer includes separate 32- and 64-bit builds of gcc 4.9.3 and 
+mingw-w64 v3 compiled by Jeroen Ooms and others.  For use with the latter
+it also includes a copy of libicu55.
+
+The Cygwin tools and DLLs were updated on April 4, 2018.  They are 
+32 bit versions taken from msys2.
+
+Tcl/Tk is version 8.5.8.
+    
+    
+
+                    EXISTING CYGWIN INSTALLATIONS
+		
+We no longer use cygwin.

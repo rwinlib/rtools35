@@ -1,0 +1,12 @@
+[submodule "utils"]
+	path = utils
+	url = https://github.com/rwinlib/utils
+[submodule "tcltk"]
+	path = tcltk
+	url = https://github.com/rwinlib/tcltk
+[submodule "icu"]
+	path = icu
+	url = https://github.com/rwinlib/icu
+[submodule "texinfo5"]
+	path = texinfo5
+	url = https://github.com/rwinlib/texinfo5
