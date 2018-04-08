@@ -222,13 +222,6 @@ begin
     result := newpath;
 end;
 
-var
-  root : integer;
-  cygwinroot : string;
-const
-  subkey = 'SOFTWARE\Cygnus Solutions\Cygwin\mounts v2\/';
-  valuename = 'native';
-
 function IsAdmin: boolean;
 begin
   Result := IsAdminLoggedOn or IsPowerUserLoggedOn;
