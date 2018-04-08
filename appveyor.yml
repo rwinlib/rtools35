@@ -1,0 +1,31 @@
+environment:
+  PfxUri:
+    secure: z+vP1iY4odY07BV7v+yfuA2MBKQFFLGokZoefPhz22evsMT/KnwtB4NgcYNLJheI
+  CertPassword:
+    secure: nwSwtaLCl6Xo5sfqKLvO30aFFGCgjGJ2GKTqS33zkJg=
+  SignTool: C:\Program Files (x86)\Windows Kits\8.1\bin\x64\signtool.exe
+  KeyFile: C:\jeroen.pfx
+
+install:
+  - ps: |
+      Import-Module '.\avtools.ps1'
+      InstallInno
+  - git submodule update --init
+
+build_script:
+  - 7z x mingw32-2015-09-22.7z
+  - 7z x mingw64-2015-09-22.7z  
+  - ps: InnoBuild "rtools.iss"
+
+after_build:
+  - ps: Start-FileDownload $env:PfxUri -FileName $env:KeyFile
+  - ps: SignFiles "Output\*.exe"
+  - ps: Remove-Item –path $env:KeyFile
+
+artifacts:
+  - path: Output\Rtools35.exe
+    name: Rtools35
+
+on_finish:
+  - 7z a logs.zip *.log
+  - appveyor PushArtifact logs.zip
