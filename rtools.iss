@@ -71,7 +71,7 @@ Source: "tcltk\*"; DestDir: "{app}\"; Flags: ignoreversion recursesubdirs create
 Source: "icu\*"; DestDir: "{app}\mingw_libs"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: Extras; Excludes: ".svn"
  
 [Tasks]
-Name: setPath; Description: "{code:setPathDescription}"; Flags:  unchecked;
+Name: setPath; Description: "Add rtools to system PATH"; Flags: unchecked;
 Name: recordversion; Description: "Save version information to registry"
 
 [Registry]
@@ -100,7 +100,6 @@ Root: HKCU; Subkey: "Software\R-core\Rtools\{code:SetupVer}"; Flags: uninsdelete
 [Code]
 const
   CRLF = #13#10;
-  MAXPATHLINES = 5;
 var
   PathPage : TWizardPage;
   PathMemo : TMemo;
@@ -139,11 +138,25 @@ begin
   PathMemo.text := pathstart + CRLF + path;
 end;
 
+function removeLineBreaks(Sender: TWizardPage): Boolean;
+begin
+  newpath := PathMemo.text;
+  while StringChangeEx(newpath, CRLF, '', true) > 0 do;
+  Result := True;
+end;
+
+function skipSetPathPage(Sender: TWizardPage): Boolean;
+begin
+  Result := not IsTaskSelected('setPath');
+end;
+
 procedure InitializeWizard;
 begin
 
   PathPage := CreateCustomPage(wpSelectTasks, 'System Path', 'Edit the PATH (leaving Rtools\bin first).');
   PathPage.OnActivate := @PathPageActivate;
+  PathPage.OnNextButtonClick := @removeLineBreaks;
+  PathPage.OnShouldSkipPage := @skipSetPathPage;
   
   PathMemo := TMemo.Create(PathPage);
   PathMemo.Top := ScaleY(8);
@@ -156,61 +169,6 @@ begin
   oldpath := '';
   RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment',
      'PATH', oldpath);
-end;
-
-function NextButtonClick(PageID: Integer): Boolean;
-begin
-  if PageId = PathPage.ID then
-  begin
-    newpath := PathMemo.text;
-    while StringChangeEx(newpath, CRLF, '', true) > 0 do;
-  end;
-  Result := True;
-end;
-
-function ShouldSkipPage(PageID: Integer): Boolean;
-begin
-  Result := false;
-  if PageID = PathPage.ID then
-    Result := not IsTaskSelected('setPath');
-end;
-
-function setPathDescription(Param: String): String;
-var
-  path, pathstart : string;
-  semi, col : integer;
-  linecount : integer;
-begin
-  if newpath = '' then
-  begin
-    result := 'Edit the system PATH.' + CRLF + CRLF + 'Current value:'
-              + CRLF + 'PATH=';
-    path := oldpath;
-  end
-  else
-  begin
-    result := 'Change system PATH to:' + CRLF + 'PATH=';
-    path := newpath;
-  end;
-  // Wrap a long path
-  pathstart := '';
-  col := 0;
-  linecount := 0;
-  repeat
-    semi := pos(';', path);
-    if semi + col > 80 then
-    begin
-      pathstart := pathstart + CRLF + '     ';
-      col := 0;
-      linecount := linecount + 1;
-    end;
-    pathstart := pathstart + copy(path, 1, semi);
-    col := col + semi;
-    path := copy(path, semi + 1, length(path));
-  until (semi = 0) or (linecount + 1 = MAXPATHLINES);
-  if semi <> 0 then
-    path := CRLF + '[truncated]';
-  result := result + pathstart + path;
 end;
 
 function getNewPath(Param : string): string;
