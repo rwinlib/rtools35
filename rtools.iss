@@ -101,8 +101,7 @@ Root: HKCU; Subkey: "Software\R-core\Rtools\{code:SetupVer}"; Flags: uninsdelete
 const
   CRLF = #13#10;
 var
-  PathPage : TWizardPage;
-  PathMemo : TMemo;
+  TextArea : TMemo;
   oldpath, newpath : string;
 
 function AddPrefix(prefix: string; oldpath: string): string;
@@ -135,12 +134,12 @@ begin
   until semi = 0;
   if copy(pathstart, 1, 2) = CRLF then
     pathstart := copy(pathstart, 3, length(pathstart)-2);
-  PathMemo.text := pathstart + CRLF + path;
+  TextArea.text := pathstart + CRLF + path;
 end;
 
 function removeLineBreaks(Sender: TWizardPage): Boolean;
 begin
-  newpath := PathMemo.text;
+  newpath := TextArea.text;
   while StringChangeEx(newpath, CRLF, '', true) > 0 do;
   Result := True;
 end;
@@ -151,6 +150,9 @@ begin
 end;
 
 procedure InitializeWizard;
+var
+  PathPage : TWizardPage;
+
 begin
 
   PathPage := CreateCustomPage(wpSelectTasks, 'System Path', 'Edit the PATH (leaving Rtools\bin first).');
@@ -158,12 +160,12 @@ begin
   PathPage.OnNextButtonClick := @removeLineBreaks;
   PathPage.OnShouldSkipPage := @skipSetPathPage;
   
-  PathMemo := TMemo.Create(PathPage);
-  PathMemo.Top := ScaleY(8);
-  PathMemo.Width := PathPage.SurfaceWidth;
-  PathMemo.Height := PathPage.SurfaceHeight - PathMemo.Top;
-  PathMemo.ScrollBars := ssVertical;
-  PathMemo.Parent := PathPage.Surface;
+  TextArea := TMemo.Create(PathPage);
+  TextArea.Top := ScaleY(8);
+  TextArea.Width := PathPage.SurfaceWidth;
+  TextArea.Height := PathPage.SurfaceHeight - textArea.Top;
+  TextArea.ScrollBars := ssVertical;
+  TextArea.Parent := PathPage.Surface;
 
   newpath := '';
   oldpath := '';
