@@ -47,28 +47,28 @@ Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
 
 [Types]
-Name: "packages"; Description: "Package authoring installation"
-Name: "full"; Description: "Full installation to build 32 or 64 bit R 3.2.x+"
+Name: "packages"; Description: "Tools for building R packages from source (recommended)"
+Name: "full"; Description: "Full installation to build 32 and 64 bit R 3.5.x"
 Name: "compact"; Description: "Compact installation"
 Name: "custom"; Description: "Custom installation"; Flags: iscustom
 
 [Components]
-Name: "Rtools"; Description: "R toolset"; Types: full compact packages
-Name: "mingw_32"; Description: "R 3.3.x+ 32 bit toolchain"; Types: full packages
-Name: "mingw_64"; Description: "R 3.3.x+ 64 bit toolchain"; Types: full packages
-Name: "Extras"; Description: "Extras to build 32 bit R:  TCL/TK"; Types: full
+Name: "Rtools"; Description: "Build utilities (make, sh, tar, etc)"; Types: full compact packages
+Name: "mingw_32"; Description: "R 3.5.x+ 32 bit toolchain"; Types: full packages
+Name: "mingw_64"; Description: "R 3.5.x+ 64 bit toolchain"; Types: full packages
+Name: "Extras"; Description: "Extras to build R itself: ICU, TexInfo, TclTk"; Types: full
 
 [Files]
 Source: "Rtools.txt"; DestDir: "{app}"; Flags: ignoreversion; 
 Source: "VERSION.txt"; DestDir: "{app}";
 Source: "utils\*"; DestDir: "{app}\bin"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: Rtools; Excludes: ".svn"
-Source: "texinfo5\*"; DestDir: "{app}\texinfo5"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: Rtools; Excludes: ".svn"
+Source: "texinfo5\*"; DestDir: "{app}\texinfo5"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: Extras; Excludes: ".svn"
 Source: "COPYING"; DestDir: "{app}"; Flags: ignoreversion
 Source: "README.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "mingw32-2015-09-22\*"; DestDir: "{app}\mingw_32"; Flags: ignoreversion recursesubdirs; Components: mingw_32; Excludes: ".svn"
 Source: "mingw64-2015-09-22\*"; DestDir: "{app}\mingw_64"; Flags: ignoreversion recursesubdirs; Components: mingw_64; Excludes: ".svn"
 Source: "tcltk\*"; DestDir: "{app}\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: Extras; Excludes: ".svn"
-Source: "icu\*"; DestDir: "{app}\mingw_libs"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: mingw_32 mingw_64; Excludes: ".svn"
+Source: "icu\*"; DestDir: "{app}\mingw_libs"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: Extras; Excludes: ".svn"
  
 [Tasks]
 Name: setPath; Description: "{code:setPathDescription}"; Flags:  unchecked;
