@@ -105,7 +105,6 @@ var
   PathPage : TWizardPage;
   PathMemo : TMemo;
   oldpath, newpath : string;
-  version : string;
 
 function AddPrefix(prefix: string; oldpath: string): string;
 begin
@@ -122,12 +121,7 @@ var
   semi : integer;
 begin
   if newpath = '' then
-  begin
-    if isComponentSelected('mingw_32') then
-      path := AddPrefix(ExpandConstant('{app}\bin;{app}\mingw_32\bin;'), oldpath)
-    else if isComponentSelected('mingw_64') then
-      path := AddPrefix(ExpandConstant('{app}\bin;{app}\mingw_64\bin;'), oldpath);
-  end
+    path := AddPrefix(ExpandConstant('{app}\bin;'), oldpath)
   else
     path := newpath;
   // Wrap at semicolons
@@ -147,8 +141,6 @@ end;
 
 procedure InitializeWizard;
 begin
-  if not GetVersionNumbersString(ExpandConstant('{srcexe}'), version) then
-    version := '';
 
   PathPage := CreateCustomPage(wpSelectTasks, 'System Path', 'Edit the PATH (leaving Rtools\bin first).');
   PathPage.OnActivate := @PathPageActivate;
@@ -174,6 +166,13 @@ begin
     while StringChangeEx(newpath, CRLF, '', true) > 0 do;
   end;
   Result := True;
+end;
+
+function ShouldSkipPage(PageID: Integer): Boolean;
+begin
+  Result := false;
+  if PageID = PathPage.ID then
+    Result := not IsTaskSelected('setPath');
 end;
 
 function setPathDescription(Param: String): String;
