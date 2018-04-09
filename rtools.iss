@@ -1,6 +1,6 @@
 [Setup]
 AppName=Rtools
-AppVerName=Rtools 3.5
+AppVersion=3.5
 VersionInfoVersion=3.5.0.0
 AppPublisher=The R Foundation
 AppPublisherURL=https://cran.r-project.org/bin/windows/Rtools
@@ -233,34 +233,12 @@ begin
 end;
 
 function SetupVer(Param: String): String;
-var
-  i, p : integer;
 begin
-  if GetVersionNumbersString(ExpandConstant('{srcexe}'), result) then
-  begin
-    i := 0;
-    p := 0;
-    while p < length(result) do
-    begin
-      p := p + 1;
-      if result[p] = '.' then
-      begin
-        i := i + 1;
-        if i = 2 then
-        begin
-          p := p - 1;
-          break;
-        end;
-      end;
-    end;
-    result := copy(result, 1, p);
-  end
-  else
-    result := 'Unknown';
+  result := '{#SetupSetting("AppVersion")}';
 end;
 
 function FullVersion(Param: String): String;
 begin
-  result := version;
+  result := '{#SetupSetting("VersionInfoVersion")}';
 end;
 
