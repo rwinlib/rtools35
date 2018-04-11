@@ -8,13 +8,13 @@ environment:
 
 install:
   - ps: |
-      Import-Module '.\avtools.ps1'
+      Import-Module '.\scripts\avtools.ps1'
       InstallInno
   - git submodule update --init
 
 build_script:
-  - 7z x mingw32-2015-09-22.7z
-  - 7z x mingw64-2015-09-22.7z  
+  - 7z x toolchains\mingw32-2015-09-22.7z
+  - 7z x toolchains\mingw64-2015-09-22.7z  
   - ps: InnoBuild "rtools.iss"
 
 after_build:

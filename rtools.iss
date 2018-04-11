@@ -8,7 +8,7 @@ AppSupportURL=https://cran.r-project.org/bin/windows/Rtools
 AppUpdatesURL=https://cran.r-project.org/bin/windows/Rtools
 DefaultDirName=c:\Rtools
 DefaultGroupName=Rtools
-InfoBeforeFile=Rtools.txt
+InfoBeforeFile=docs\Rtools.txt
 OutputBaseFilename=Rtools35
 Compression=lzma/ultra
 SolidCompression=yes
@@ -59,12 +59,12 @@ Name: "mingw_64"; Description: "R 3.5.x+ 64 bit toolchain"; Types: full packages
 Name: "Extras"; Description: "Extras to build R itself: ICU, TexInfo, TclTk"; Types: full
 
 [Files]
-Source: "Rtools.txt"; DestDir: "{app}"; Flags: ignoreversion; 
-Source: "VERSION.txt"; DestDir: "{app}";
+Source: "docs\VERSION.txt"; DestDir: "{app}";
+Source: "docs\Rtools.txt"; DestDir: "{app}"; Flags: ignoreversion; 
+Source: "docs\COPYING"; DestDir: "{app}"; Flags: ignoreversion
+Source: "docs\README.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "utils\*"; DestDir: "{app}\bin"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: Rtools; Excludes: ".svn"
 Source: "texinfo5\*"; DestDir: "{app}\texinfo5"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: Extras; Excludes: ".svn"
-Source: "COPYING"; DestDir: "{app}"; Flags: ignoreversion
-Source: "README.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "mingw32-2015-09-22\*"; DestDir: "{app}\mingw_32"; Flags: ignoreversion recursesubdirs; Components: mingw_32; Excludes: ".svn"
 Source: "mingw64-2015-09-22\*"; DestDir: "{app}\mingw_64"; Flags: ignoreversion recursesubdirs; Components: mingw_64; Excludes: ".svn"
 Source: "tcltk\*"; DestDir: "{app}\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: Extras; Excludes: ".svn"
