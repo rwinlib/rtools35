@@ -1,72 +1,45 @@
-                      Rtools Collection 3.5.0.0
+                             Rtools 3.5
 
-This is the Rtools.txt file, which will be installed in the main
-Rtools directory. See also the README.txt file there, which describes
-the origin of some of the tools. The tools installed in the
-Rtools\mingw_32, and Rtools\mingw_64 directories 
-are from the MinGW-w64 distribution.  
- 
+This bundle contains the Windows Toolchain and Build Utilities for R.
+The original collection was put together by Prof. Brian Ripley and 
+Duncan Murdoch; it is currently maintained by Jeroen Ooms.
 
-                                MSYS2
-			  
-This version upgrades the old cygwin utilities to msys2. 
+More information: https://cran.r-project.org/bin/windows/Rtools/
 
-                           REMAINING TASKS
+                             TOOLCHAINS
 
-This installer doesn't install all of the tools necessary to build R
-or R packages, because of license or size limitations.  The remaining
-tools are all available online (at no charge) as described below.
+The same toolchain is used for building R itself and compiling R
+packages from source. Versions 3.3, 3.4, and 3.5 of Rtools ship with 
+a mingw-w64 toolchain based on gcc 4.9.3. We do not use multilib
+compilers, instead we ship separate compilers targeting 32 and 64 bit.
 
-TO BUILD R PACKAGES, you may optionally want item 1 below
-(LaTeX).
+If you install Rtools anywhere other than the default C:\Rtools\, you
+have to point R to the path of gcc, g++, ld, etc, by setting a variable
+called BINPREF. For example:
 
-TO BUILD R, you do need item 1, and item 2 (Inno Setup) is optional if you
-would like to build the installer.
+  BINPREF="M:/R/Rtools-3.5/mingw_$(WIN)/bin/"
 
-As of R 3.2.0, the manuals are optional.  To build them you will need
-item 3 below. 
+Note how we embed another variable $(WIN) which is set by R to either 
+"32" or "64" depending on the target. Thereby this BINPREF works for 
+both architectures.
 
-The Rtools installer will optionally edit your PATH variable as follows:
+I do not recommended to store this variable in your Windows system but
+instead define it in your .Renviron file in your user home path, which
+is your Documents folder. See also ?Startup in R.
 
-PATH=c:\Rtools\bin;<others>
+                           BUILD UTILITIES
 
-(where you will substitute appropriate directories for the ones listed
-above, but please keep the path in the same order as shown. LaTeX and
-R itself should be installed among the "others".)
+Rtools includes some standard utilities such as make, bash, sed, which 
+are required to build R packages with compiled code. These utilities
+need to be on the PATH when installing R packages from source. 
 
-                           REMAINING ITEMS
+Again, I do not recommended to modify your Windows system PATH, instead
+add a line like this in the same .Renviron file discussed above:
 
-1. You may install LaTeX, available from
+  PATH="C:\Rtools\bin;${PATH}"
 
-  http://www.miktex.org
-  
-LaTeX is used to build .pdf forms of documentation.
-  
-2. You need the Inno Setup installer, available from
-
-  http://www.innosetup.com
-  
-to build the R installer.
-
-3. You will need Perl, e.g. from
-
-  http://strawberryperl.com/
-  
-to build the manuals.
-
-                               VERSIONS
-			
-This installer includes separate 32- and 64-bit builds of gcc 4.9.3 and 
-mingw-w64 v3 compiled by Jeroen Ooms and others.  For use with the latter
-it also includes a copy of libicu55.
-
-The Cygwin tools and DLLs were updated on April 4, 2018.  They are 
-32 bit versions taken from msys2.
-
-Tcl/Tk is version 8.5.8.
-    
-    
-
-                    EXISTING CYGWIN INSTALLATIONS
-		
-We no longer use cygwin.
+You can skip this step if your PATH already has working versions of sh,
+and make, for example from CYGWIN or msys2. There is nothing special 
+about our versions, almost any version will do. However this does not
+hold for the toolchain; be very careful with 3rd party gcc, g++, ld on 
+the system PATH.

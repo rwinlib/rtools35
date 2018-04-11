@@ -1,7 +1,7 @@
 [Setup]
 AppName=Rtools
 AppVersion=3.5
-VersionInfoVersion=3.5.0.0
+VersionInfoVersion=3.5.0.1
 AppPublisher=The R Foundation
 AppPublisherURL=https://cran.r-project.org/bin/windows/Rtools
 AppSupportURL=https://cran.r-project.org/bin/windows/Rtools
@@ -62,7 +62,7 @@ Name: "Extras"; Description: "Extras to build R itself: ICU, TexInfo, TclTk"; Ty
 Source: "docs\VERSION.txt"; DestDir: "{app}";
 Source: "docs\Rtools.txt"; DestDir: "{app}"; Flags: ignoreversion; 
 Source: "docs\COPYING"; DestDir: "{app}"; Flags: ignoreversion
-Source: "docs\README.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "readme.md"; DestDir: "{app}"; DestName: "README.txt"; Flags: ignoreversion
 Source: "utils\*"; DestDir: "{app}\bin"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: Rtools; Excludes: ".svn"
 Source: "texinfo5\*"; DestDir: "{app}\texinfo5"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: Extras; Excludes: ".svn"
 Source: "mingw32-2015-09-22\*"; DestDir: "{app}\mingw_32"; Flags: ignoreversion recursesubdirs; Components: mingw_32; Excludes: ".svn"
