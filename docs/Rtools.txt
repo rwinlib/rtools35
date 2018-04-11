@@ -6,26 +6,6 @@ Duncan Murdoch; it is currently maintained by Jeroen Ooms.
 
 More information: https://cran.r-project.org/bin/windows/Rtools/
 
-                             TOOLCHAINS
-
-The same toolchain is used for building R itself and compiling R
-packages from source. Versions 3.3, 3.4, and 3.5 of Rtools ship with 
-a mingw-w64 toolchain based on gcc 4.9.3. We do not use multilib
-compilers, instead we ship separate compilers targeting 32 and 64 bit.
-
-If you install Rtools anywhere other than the default C:\Rtools\, you
-have to point R to the path of gcc, g++, ld, etc, by setting a variable
-called BINPREF. For example:
-
-  BINPREF="M:/R/Rtools-3.5/mingw_$(WIN)/bin/"
-
-Note how we embed another variable $(WIN) which is set by R to either 
-"32" or "64" depending on the target. Thereby this BINPREF works for 
-both architectures.
-
-I do not recommended to store this variable in your Windows system but
-instead define it in your .Renviron file in your user home path, which
-is your Documents folder. See also ?Startup in R.
 
                            BUILD UTILITIES
 
@@ -33,13 +13,34 @@ Rtools includes some standard utilities such as make, bash, sed, which
 are required to build R packages with compiled code. These utilities
 need to be on the PATH when installing R packages from source. 
 
-Again, I do not recommended to modify your Windows system PATH, instead
-add a line like this in the same .Renviron file discussed above:
+You can either modify your Windows system PATH, or instead define a line 
+like below in your ".Renviron" file in your Documents folder. See also
+the manual page for ?Startup in R for saving variables.
 
-  PATH="C:\Rtools\bin;${PATH}"
+    PATH="C:\Rtools\bin;${PATH}"
 
-You can skip this step if your PATH already has working versions of sh,
-and make, for example from CYGWIN or msys2. There is nothing special 
-about our versions, almost any version will do. However this does not
-hold for the toolchain; be very careful with 3rd party gcc, g++, ld on 
-the system PATH.
+Note that Windows PATH uses backslashes. You can skip this step if your
+PATH already has working make and sh, for example from CYGWIN or msys2.
+However you should not put other toolchains (gcc, g++, ld) on the PATH.
+
+
+                             GCC TOOLCHAIN
+
+Versions 3.3, 3.4, and 3.5 of Rtools ship with a mingw-w64 toolchain 
+based on gcc 4.9.3. We do not use multilib compilers, instead we ship 
+separate compilers targeting 32 and 64 bit.
+
+By default, R looks for compilers in the default installation path in
+C:\Rtools\. If you install Rtools anywhere else, you have to point R 
+to the path of gcc, g++, ld, by setting a variable called BINPREF.
+For example:
+
+    BINPREF="M:/R/Rtools-3.5/mingw_$(WIN)/bin/"
+
+Note how we embed another variable $(WIN) which is set by R to either 
+"32" or "64" depending on the target. Thereby this BINPREF works for 
+both architectures. Also note that R requires forward slashes here.
+
+You can either store this variable in your Windows system or define it
+in your ".Renviron" file in the user home (Documents) folder. See also
+the manual page for ?Startup in R.
