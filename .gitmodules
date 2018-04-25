@@ -13,3 +13,6 @@
 [submodule "checkutils"]
 	path = checkutils
 	url = https://github.com/rwinlib/checkutils
+[submodule "aspell"]
+	path = aspell
+	url = https://github.com/rwinlib/aspell
