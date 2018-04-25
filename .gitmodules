@@ -10,3 +10,6 @@
 [submodule "texinfo5"]
 	path = texinfo5
 	url = https://github.com/rwinlib/texinfo5
+[submodule "checkutils"]
+	path = checkutils
+	url = https://github.com/rwinlib/checkutils

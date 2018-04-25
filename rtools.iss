@@ -1,7 +1,7 @@
 [Setup]
 AppName=Rtools
 AppVersion=3.5
-VersionInfoVersion=3.5.0.1
+VersionInfoVersion=3.5.0.2
 AppPublisher=The R Foundation
 AppPublisherURL=https://cran.r-project.org/bin/windows/Rtools
 AppSupportURL=https://cran.r-project.org/bin/windows/Rtools
@@ -56,6 +56,7 @@ Name: "custom"; Description: "Custom installation"; Flags: iscustom
 Name: "Rtools"; Description: "Build utilities (make, sh, tar, etc)"; Types: full compact packages
 Name: "mingw_32"; Description: "R 3.5.x+ 32 bit toolchain"; Types: full packages
 Name: "mingw_64"; Description: "R 3.5.x+ 64 bit toolchain"; Types: full packages
+Name: "checkutils"; Description: "Tools for running CMD check (qpdf, objdump)"; Types: full packages
 Name: "Extras"; Description: "Extras to build R itself: ICU, TexInfo, TclTk"; Types: full
 
 [Files]
@@ -64,6 +65,7 @@ Source: "docs\Rtools.txt"; DestDir: "{app}"; Flags: ignoreversion;
 Source: "docs\COPYING"; DestDir: "{app}"; Flags: ignoreversion
 Source: "readme.md"; DestDir: "{app}"; DestName: "README.txt"; Flags: ignoreversion
 Source: "utils\*"; DestDir: "{app}\bin"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: Rtools; Excludes: ".svn"
+Source: "checkutils\*"; DestDir: "{app}\bin"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: checkutils; Excludes: ".svn"
 Source: "texinfo5\*"; DestDir: "{app}\texinfo5"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: Extras; Excludes: ".svn"
 Source: "mingw32-2015-09-22\*"; DestDir: "{app}\mingw_32"; Flags: ignoreversion recursesubdirs; Components: mingw_32; Excludes: ".svn"
 Source: "mingw64-2015-09-22\*"; DestDir: "{app}\mingw_64"; Flags: ignoreversion recursesubdirs; Components: mingw_64; Excludes: ".svn"
