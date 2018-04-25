@@ -1,0 +1,2 @@
+PATH="${Rtools}\bin;${PATH}"
+# BINPREF="C:/Rtools/mingw_$(WIN)/bin/"

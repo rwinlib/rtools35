@@ -6,7 +6,7 @@ AppPublisher=The R Foundation
 AppPublisherURL=https://cran.r-project.org/bin/windows/Rtools
 AppSupportURL=https://cran.r-project.org/bin/windows/Rtools
 AppUpdatesURL=https://cran.r-project.org/bin/windows/Rtools
-DefaultDirName=c:\Rtools
+DefaultDirName=C:\Rtools
 DefaultGroupName=Rtools
 InfoBeforeFile=docs\Rtools.txt
 OutputBaseFilename=Rtools35
@@ -64,6 +64,8 @@ Name: "Extras"; Description: "Extras to build R itself: ICU, TexInfo, TclTk"; Ty
 Source: "docs\VERSION.txt"; DestDir: "{app}";
 Source: "docs\Rtools.txt"; DestDir: "{app}"; Flags: ignoreversion; 
 Source: "docs\COPYING"; DestDir: "{app}"; Flags: ignoreversion
+Source: "scripts\Renviron"; DestDir: "{app}"; Flags: ignoreversion
+Source: "scripts\check.Renviron"; DestDir: "{app}"; Flags: ignoreversion
 Source: "readme.md"; DestDir: "{app}"; DestName: "README.txt"; Flags: ignoreversion
 Source: "utils\*"; DestDir: "{app}\bin"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: Rtools
 Source: "checkutils\*"; DestDir: "{app}\bin"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: checkutils
@@ -78,9 +80,13 @@ Source: "icu\*"; DestDir: "{app}\mingw_libs"; Flags: ignoreversion recursesubdir
 [Tasks]
 Name: setPath; Description: "Add rtools to system PATH"; Flags: unchecked;
 Name: recordversion; Description: "Save version information to registry"
+Name: setEnviron; Description: "Automatically configure build/check environment"
 
 [Registry]
 Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: expandsz; ValueName: PATH; ValueData: "{code:getNewPath}"; Tasks: setPath
+Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: expandsz; Flags: uninsdeletevalue; ValueName: Rtools; ValueData: "{app}"; Tasks: setEnviron
+Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: expandsz; Flags: uninsdeletevalue; ValueName: R_ENVIRON; ValueData: "%Rtools%\Renviron"; Tasks: setEnviron
+Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: expandsz; Flags: uninsdeletevalue; ValueName: R_CHECK_ENVIRON; ValueData: "%Rtools%\check.Renviron"; Tasks: setEnviron
 
 Root: HKLM; Subkey: "Software\R-core"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: IsAdmin
 Root: HKLM; Subkey: "Software\R-core\Rtools"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: IsAdmin
