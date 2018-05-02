@@ -6,7 +6,7 @@ AppPublisher=The R Foundation
 AppPublisherURL=https://cran.r-project.org/bin/windows/Rtools
 AppSupportURL=https://cran.r-project.org/bin/windows/Rtools
 AppUpdatesURL=https://cran.r-project.org/bin/windows/Rtools
-DefaultDirName=c:\Rtools
+DefaultDirName=C:\Rtools
 DefaultGroupName=Rtools
 InfoBeforeFile=docs\Rtools.txt
 OutputBaseFilename=Rtools35
@@ -76,7 +76,7 @@ Source: "tcltk\*"; DestDir: "{app}\"; Flags: ignoreversion recursesubdirs create
 Source: "icu\*"; DestDir: "{app}\mingw_libs"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: Extras
  
 [Tasks]
-Name: setPath; Description: "Add rtools to system PATH"; Flags: unchecked;
+Name: setPath; Description: "Add rtools to system PATH"; Flags: unchecked; Check: IsAdmin
 Name: recordversion; Description: "Save version information to registry"
 
 [Registry]
