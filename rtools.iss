@@ -1,7 +1,7 @@
 [Setup]
 AppName=Rtools
 AppVersion=3.5
-VersionInfoVersion=3.5.0.2
+VersionInfoVersion=3.5.0.3
 AppPublisher=The R Foundation
 AppPublisherURL=https://cran.r-project.org/bin/windows/Rtools
 AppSupportURL=https://cran.r-project.org/bin/windows/Rtools
@@ -14,6 +14,7 @@ Compression=lzma/ultra
 SolidCompression=yes
 PrivilegesRequired=none
 ChangesEnvironment=yes
+UsePreviousAppDir=no
 
 [Code]
 function MinRVersion(Param: String): String;
