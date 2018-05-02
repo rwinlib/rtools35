@@ -46,6 +46,9 @@ Name: "slovenian"; MessagesFile: "compiler:Languages\Slovenian.isl"
 Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
 
+[CustomMessages]
+AlreadyExists=Another version of Rtools is already installed in: %1. It is recommended to uninstall the old version before installing a new version.%n%nDo you want to proceed anyway?
+
 [Types]
 Name: "packages"; Description: "Tools for building R packages from source (recommended)"
 Name: "full"; Description: "Full installation to build 32 and 64 bit R 3.5.x"
@@ -105,6 +108,8 @@ Root: HKCU; Subkey: "Software\R-core\Rtools\{code:SetupVer}"; Flags: uninsdelete
 [Code]
 const
   CRLF = #13#10;
+  subkey = 'Software\Microsoft\Windows\CurrentVersion\Uninstall\{#SetupSetting("AppName")}_is1';
+
 var
   TextArea : TMemo;
   oldpath, newpath : string;
@@ -178,7 +183,7 @@ begin
      'PATH', oldpath);
 end;
 
-function getNewPath(Param : string): string;
+function getNewPath(Param : String): String;
 begin
   if newpath = '' then
     result := oldpath
@@ -206,3 +211,30 @@ begin
   result := '{#SetupSetting("VersionInfoVersion")}';
 end;
 
+function getSoftRootKey: Integer;
+begin
+  if IsAdmin then
+    result := HKLM
+  else
+    result := HKCU;
+end;
+
+function confirmInstall(Location: String): boolean;
+begin
+  if MsgBox(FmtMessage(ExpandConstant('{cm:AlreadyExists}'), [Location]), mbConfirmation, MB_YESNO) = IDYES then
+    Result := True
+  else
+    Result := False;
+end;
+
+function InitializeSetup: boolean;
+var Location: String;
+begin
+  if RegValueExists(getSoftRootKey, subkey, 'InstallLocation') then
+  begin
+    RegQueryStringValue(getSoftRootKey, subkey, 'InstallLocation', Location);
+    Result := confirmInstall(Location);
+  end
+  else
+    Result := True;
+end;
