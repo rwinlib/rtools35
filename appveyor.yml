@@ -18,17 +18,16 @@ build_script:
   - copy mingw32-2015-09-22\lib\gcc\i686-w64-mingw32\4.9.3\libgcc.a mingw32-2015-09-22\lib\gcc\i686-w64-mingw32\4.9.3\libgcc_eh.a
   - copy mingw64-2015-09-22\lib\gcc\x86_64-w64-mingw32\4.9.3\libgcc.a mingw64-2015-09-22\lib\gcc\x86_64-w64-mingw32\4.9.3\ibgcc_eh.a
   - ps: InnoBuild "rtools.iss"
-  - move Output\Rtools35.exe Rtools35.exe
-  - move docs\VERSION.txt VERSION.txt
 
 after_build:
   - ps: Start-FileDownload $env:PfxUri -FileName $env:KeyFile
-  - ps: SignFiles "Rtools35.exe"
+  - ps: SignFiles "Output\*.exe"
   - ps: Remove-Item –path $env:KeyFile
+  - 7z a rtools-win.zip docs\VERSION.txt Output\Rtools35.exe
 
 artifacts:
-  - path: Rtools35.exe
-    name: Rtools35
+  - path: rtools-win.zip
+    name: Rtools
 
 on_finish:
   - 7z a logs.zip *.log
@@ -36,7 +35,9 @@ on_finish:
 
 deploy:
   - provider: Environment
-    name: ftp_rtools
-    bundle: Rtools35.exe VERSION.txt
+    name: ftp_archive
+    target: rtools
+    archive: rtools
+    revision: 3.5
     on:
       branch: master
