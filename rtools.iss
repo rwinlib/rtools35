@@ -1,7 +1,7 @@
 [Setup]
 AppName=Rtools
 AppVersion=3.5
-VersionInfoVersion=3.5.0.3
+VersionInfoVersion=3.5.0.4
 AppPublisher=The R Foundation
 AppPublisherURL=https://cran.r-project.org/bin/windows/Rtools
 AppSupportURL=https://cran.r-project.org/bin/windows/Rtools
