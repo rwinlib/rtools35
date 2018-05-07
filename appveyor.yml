@@ -14,7 +14,9 @@ install:
 
 build_script:
   - 7z x toolchains\mingw32-2015-09-22.7z
-  - 7z x toolchains\mingw64-2015-09-22.7z  
+  - 7z x toolchains\mingw64-2015-09-22.7z
+  - copy mingw32-2015-09-22\lib\gcc\i686-w64-mingw32\4.9.3\libgcc.a mingw32-2015-09-22\lib\gcc\i686-w64-mingw32\4.9.3\libgcc_eh.a
+  - copy mingw64-2015-09-22\lib\gcc\x86_64-w64-mingw32\4.9.3\libgcc.a mingw64-2015-09-22\lib\gcc\x86_64-w64-mingw32\4.9.3\ibgcc_eh.a
   - ps: InnoBuild "rtools.iss"
 
 after_build:
