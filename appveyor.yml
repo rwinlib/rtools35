@@ -35,6 +35,6 @@ on_finish:
 deploy:
   - provider: Environment
     name: ftp_rtools
-    bundle: Output\Rtools35.exe
+    bundle: Output\Rtools35.exe docs\VERSION.txt
     on:
       branch: master
