@@ -31,3 +31,10 @@ artifacts:
 on_finish:
   - 7z a logs.zip *.log
   - appveyor PushArtifact logs.zip
+
+deploy:
+  - provider: Environment
+    name: ftp_rtools
+    bundle: Output\Rtools35.exe
+    on:
+      branch: master
